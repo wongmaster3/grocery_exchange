@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+ <link href="{{url_for('static', filename='home_list.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class=container">
+    <div class="row align-items-center justify-content-center">
+         <div class="jumbotron">
+            <h1 class="display-4">Transaction: {{ current_user.name }}</h1>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3">
+        <form action="{{ url_for('exchange.calculate') }}" method="post">
+         <div class="list-group">
+             {% for item in items %}
+              <input type="checkbox" name="{{ item.id }}" value="{{ item.id }}" id= "{{ item.id }}"/>
+              <label class="list-group-item" for="{{ item.id }}">
+                  <span class="text-left">
+                        {{ item.name }}
+                    </span>
+<!--                  <div class="text-right"></div>-->
+<!--                  <div class="text-left"></div>-->
+                  <div>
+                  <div class="float-left">
+                      {% if item.split != 1 %}
+                        <h5>Split Between: {{ item.split }} </h5>
+                      {% else %}
+                        <h5>Single Purchase </h5>
+                      {% endif %}
+                  </div>
+                  <div class="float-right">
+                  <h5 class="text-right">{{ item.price }}</h5>
+                  </div>
+                  <div class="clearfix"></div>
+                      </div>
+              </label>
+             {% endfor %}
+         </div>
+            <br>
+        Tax:
+        <input type="text" name="Tax" class="form-control" value={{ tax }} required/>
+        Tip:
+        <input type="text" name="Tip" class="form-control" value={{ tip }} required/>
+            <br>
+        <input type="submit" value="Calculate" class="btn btn-primary"/>
+        </form>
+        </div>
+
+        <div class="col-md-3">
+            <div class="jumbotron">
+                <h1 class="display-4">Total Owed: {{ cost }}</h1>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+        <form action="{{ url_for('exchange.add') }}" method="post">
+        <div class="form-group">
+           Item: {{ formadd.name(class_="form-control") }}
+           Price: {{ formadd.price(class_="form-control") }}
+            Split: {{ formadd.split(class_="form-control") }}
+	    </div>
+
+         <input type="submit" value="Add Item" class="btn btn-primary"/>
+         {{ formadd.csrf_token }}
+        </form>
+        </div>
+
+    </div>
+</div>
+<br>
+<div class=container">
+    <div class="row align-items-center justify-content-center">
+        <form method=post action="{{ url_for('exchange.upload') }}" enctype=multipart/form-data>
+           File: {{ fileform.file(class_="form-control") }}
+            <br>
+          <input type="submit" value="Upload Receipt" class="btn btn-primary"/>
+        </form>
+    </div>
+ </div>
+<br>
+<div class=container">
+    <div class="row align-items-center justify-content-center">
+        <a  type="button" class="btn btn-primary btn-lg" href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+ </div>
+
+<script>
+    var arr = {{ checked | safe}};
+    for (i = 0; i < arr.length; i++) {
+        document.getElementById(arr[i]).checked = true;
+    }
+</script>
+<br>
+{% endblock %}

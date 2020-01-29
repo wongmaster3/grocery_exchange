@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class=container"><br>
+    <div class="row align-items-center justify-content-center">
+
+       <div class="col-md-auto">
+   <div class="jumbotron">
+      <h1 class="display-4">Login:</h1>
+      <form action="{{ url_for('auth.login') }}" method="post">
+        <div class="form-group">
+           Transaction Name: {{ formlog.log_name(class_="form-control") }}
+            <br>
+           Transaction Code: {{ formlog.log_code(class_="form-control") }}
+	    </div>
+
+         <input type="submit" value="Enter" class="btn btn-primary"/>
+         {{ formlog.csrf_token }}
+      </form>
+   </div>
+       </div>
+
+       <div class="col-md-auto">
+      <div class="jumbotron">
+      <h1 class="display-4">Generate New Transaction:</h1>
+      <form action="{{ url_for('auth.login') }}" method="post">
+        <div class="form-group">
+           New Transaction Name: {{ formreg.reg_name(class_="form-control") }}
+            <br>
+           New Transaction Code: {{ formreg.reg_code(class_="form-control") }}
+             <br>
+           New Transaction Tax: {{ formreg.reg_tax(class_="form-control") }}
+             <br>
+           New Transaction Tip: {{ formreg.reg_tip(class_="form-control") }}
+        </div>
+
+         <input type="submit" value="Generate New Transaction!" class="btn btn-primary"/>
+         {{ formreg.csrf_token }}
+      </form>
+      </div>
+
+    </div>
+    </div>
+ </div>
+
+{% endblock %}
