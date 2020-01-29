@@ -15,12 +15,12 @@ def login():
     if request.method == 'POST':
         # Check if post request is coming from generating new transaction or
         # logging into transaction
-        if formlog.validate_on_submit():
-            current_exchange = Exchange.query.filter_by(name=formlog.log_name.data).first()
+        # if formlog.validate_on_submit():
+        current_exchange = Exchange.query.filter_by(name=formlog.log_name.data).first()
             # if not current_exchange:
             #     flash('Query is Empty!', 'danger')
             #
-            # if current_exchange and check_password_hash(current_exchange.code, formlog.log_code.data):
+        if current_exchange and check_password_hash(current_exchange.code, formlog.log_code.data):
             login_user(current_exchange, remember=True)
             flash('Logged in successfully.', 'success')
             # Retrieve lists of goals in account
