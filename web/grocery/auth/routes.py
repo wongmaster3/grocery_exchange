@@ -17,6 +17,7 @@ def login():
         # logging into transaction
         if formlog.validate_on_submit():
             current_exchange = Exchange.query.filter_by(name=formlog.log_name.data).first()
+            flash('Invalid login.', 'danger')
             if current_exchange and check_password_hash(current_exchange.code, formlog.log_code.data):
                 login_user(current_exchange, remember=True)
                 flash('Logged in successfully.', 'success')
@@ -36,7 +37,7 @@ def login():
             flash('New Transaction created successfully.', 'success')
             return redirect(url_for("auth.login"))
 
-        flash('Invalid login.', 'danger')
+        flash('Wrong Credentials!.', 'danger')
         return redirect(url_for("auth.login"))
 
     else:
