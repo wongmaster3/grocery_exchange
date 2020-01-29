@@ -49,5 +49,5 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    app.run(threaded=True)
+    app.run(processes=8)
 
