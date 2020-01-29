@@ -19,8 +19,7 @@ def login():
             current_exchange = Exchange.query.filter_by(name=formlog.log_name.data).first()
             if not current_exchange:
                 flash('Query is Empty!', 'danger')
-            flash(current_exchange.code)
-            flash(formlog.log_code.data)
+
             if current_exchange and check_password_hash(current_exchange.code, formlog.log_code.data):
                 login_user(current_exchange, remember=True)
                 flash('Logged in successfully.', 'success')
@@ -40,6 +39,7 @@ def login():
             flash('New Transaction created successfully.', 'success')
             return redirect(url_for("auth.login"))
 
+        flash(formlog.errors)
         flash('Wrong Credentials!.', 'danger')
         return redirect(url_for("auth.login"))
 
