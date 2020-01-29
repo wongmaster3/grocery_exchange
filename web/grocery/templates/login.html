@@ -12,6 +12,7 @@ Home
    <div class="jumbotron">
       <h1 class="display-4">Login:</h1>
       <form action="{{ url_for('auth.login') }}" method="post">
+          {{ formlog.csrf }}
         <div class="form-group">
            Transaction Name: {{ formlog.log_name(class_="form-control") }}
             <br>
@@ -19,7 +20,7 @@ Home
 	    </div>
 
          <input type="submit" value="Enter" class="btn btn-primary"/>
-         {{ formlog.hidden_tag() }}
+         {{ formlog.csrf_token }}
       </form>
    </div>
        </div>
