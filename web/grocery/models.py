@@ -24,7 +24,7 @@ class Exchange(db.Model):
 
     def is_authenticated(self):
         """Return True if the user is authenticated."""
-        return False
+        return self.authenticated
 
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
